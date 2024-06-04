@@ -1,0 +1,48 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>H2O2'Shop</title>
+</head>
+<body>
+<div class="box">
+</div>
+<body>
+</html>
+<style>
+    div.box {
+      width: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin: 0 auto;
+      padding-top: 30px;
+    }
+  </style>
+  <script>
+    const listid=[1044,1055,1066];
+    const itembox=document.getElementsByClassName('box');
+    listid.forEach(id => {
+        // div要素を作成
+        const div = document.createElement('div');
+        div.style.width = 'calc(25% - 8px)';
+        div.style.margin = '0 auto';
+        div.style.textAlign = 'center';
+
+        // a要素を作成
+        const a = document.createElement('a');
+        a.href = `./view/item.html?id=${id}`;
+
+        // img要素を作成
+        const img = document.createElement('img');
+        img.src = `./core_sys/item/${id}.png`;
+
+        // a要素にimgを追加
+        a.appendChild(img);
+
+        // div要素にaを追加
+        div.appendChild(a);
+
+        // containerにdivを追加
+        itembox.appendChild(div);
+    });
+</script>

@@ -1,0 +1,63 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <main>
+        <div id="item_detail">
+          <img src=`../../core_sys/item/${id}.png` alt="" />
+          <div id="item_desc">
+            <div class="item-title">{fItemD(id).name}</div>
+            <div class="item-price-wrap">
+              <p class="item-price">
+                <span class="item_prace_text">販売価格：</span>￥<span
+                  data-id="makeshop-item-price:1">{fItemD(id).price}</span
+                ><span class="item-tax"> ( 税込 )</span>
+              </p>
+            </div>
+            <div id="cart_area">
+              <button onclick="" id="IncartB">カートに入れる</button>
+              <button id="fav_button"><Icon name="mdi:favorite" /></button
+              >
+            </div>
+          </div>
+        </div>
+      </main>
+<body>
+</html>
+<style>
+    div.box {
+      width: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin: 0 auto;
+      padding-top: 30px;
+    }
+  </style>
+  <script>
+import { $ItemData } from '../app.js';
+// URLからidパラメータを取得
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id');
+
+// $ItemDataからidに対応するアイテムデータを取得
+const itemData = $ItemData.find(item => item.id === id);
+
+if (itemData) {
+    // 画像のURLを設定
+    const imgElement = document.querySelector('#item_detail img');
+    imgElement.src = `../../core_sys/item/${id}.png`;
+
+    // 商品名を設定
+    const titleElement = document.querySelector('.item-title');
+    titleElement.textContent = itemData.name;
+
+    // 価格を設定
+    const priceElement = document.querySelector('[data-id="makeshop-item-price:1"]');
+    priceElement.textContent = itemData.price;
+} else {
+    console.error(`ID ${id} のアイテムが見つかりませんでした。`);
+}
+
+</script>

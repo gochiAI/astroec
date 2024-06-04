@@ -1,0 +1,87 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { fItemD,InCart } from "../../script/store";
+export async function getStaticPaths() {
+  return [
+    { params: { id: "1044" } },
+    { params: { id: "1055" } },
+    { params: { id: "1066" } },
+  ];
+}
+
+const { id } = Astro.params;
+import { Icon } from "astro-icon/components";
+---
+
+<Layout title={fItemD(id).name}>
+  <main>
+    <div id="item_detail">
+      <img src=`../../core_sys/item/${id}.png` alt="" />
+      <div id="item_desc">
+        <div class="item-title">{fItemD(id).name}</div>
+        <div class="item-price-wrap">
+          <p class="item-price">
+            <span class="item_prace_text">販売価格：</span>￥<span
+              data-id="makeshop-item-price:1">{fItemD(id).price}</span
+            ><span class="item-tax"> ( 税込 )</span>
+          </p>
+        </div>
+        <div id="cart_area">
+          <button onclick=`${InCart(id)}` id="IncartB">カートに入れる</button>
+          <button id="fav_button"><Icon name="mdi:favorite" /></button
+          >
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+<style>
+  #item_detail {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    color: white;
+  }
+  #item_detail img {
+    width: 40vw;
+    height: 40vw;
+  }
+  .item-title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 26px;
+    position: relative;
+  }
+  .item-price-wrap {
+    font-size: 20px;
+  }
+  #cart_area {
+    display: flex;
+    padding-top: 10px;
+  }
+  #Incart{display: flex;
+    align-items: center;
+    background-color: #548278;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px;}
+  #fav_button {
+    font-size: 24px;
+    font-weight: 900;
+    margin-left: 5px;
+    color: #ff7683;
+  }
+  #IncartB{display: flex;
+    align-items: center;
+    background-color: #548278;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px;}
+  #IncartB:hover {
+    background-color: #3e5f4d;
+  }
+  #IncartB:focus {
+    background-color: green;
+  }
+</style>

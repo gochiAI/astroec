@@ -1,0 +1,18 @@
+---
+interface Props {
+	id: number;
+}
+
+const { id } = Astro.props;
+---
+
+<div>
+<a href=`./view/item_${id}`>
+<img src=`./core_sys/item/${id}.png`>
+</a>
+</div>
+<style>
+    div{width: calc(25% - 8px);
+    margin: 0 auto;
+    text-align: center;}
+</style>

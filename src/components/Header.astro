@@ -1,0 +1,45 @@
+---
+import {
+  Astronav,
+  MenuItems,
+  MenuIcon,
+  Dropdown,
+  DropdownItems,
+} from "astro-navbar";
+import { Icon } from 'astro-icon/components'
+---
+<main>
+<header class="lg:flex p-5 gap-5">
+  <Astronav>
+    <div class="flex w-8/12 justify-between">
+      <a>H2O2's Shop</a>
+      <div class="block lg:hidden">
+        <MenuIcon class="w-4 h-4 text-white-800" />
+      </div>
+    </div>
+    <MenuItems class="hidden lg:flex">
+      <ul class="flex flex-col lg:flex-row lg:gap-5">
+        <li><a href="../../"><Icon name="mdi:home" /></a></li>
+        <li><a href="../../view/like"><Icon name="mdi:favorite" /></a></li>
+        <li><a href="../../view/user"><Icon name="mdi:user-settings" /></a></li>
+        <li><a href="../../view/cart"><Icon name="mdi:cart-outline" /></a></li>
+      </ul>
+    </MenuItems>
+  </Astronav>
+</header>
+</main>
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 30px;
+    line-height: 0.6;
+  }
+  [data-icon] {
+        color: white;
+      
+    }
+</style>
