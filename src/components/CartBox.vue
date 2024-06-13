@@ -1,68 +1,42 @@
+<script setup>
+import { ref } from 'vue';
+import { storeShoppingCart,storeUniqueItemsQnty  } from "../script/store";
+const cart = ref(storeShoppingCart.get().items);
+
+
+</script>
 <template>
   <div id="Cart">
-    <h2>カート</h2>
-    <table>
+    <table v-if="cart.length > 0">
       <thead>
         <tr>
-          <th>商品名</th>
-          <th>価格</th>
-          <th>数量</th>
-          <th>小計</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, id) in cartData" :key="id">
+        <tr v-for="(item, index) in cart" :key="index">
           <td>{{ item.name }}</td>
-          <td>{{ item.price }}円</td>
+          <td>{{ item.price }}</td>
           <td>
-            {{ item.count }}
-            <!--<input type="number" v-model="item.count" min="1" @change="updateCart(id, item.count)" />-->
+            <input type="number" v-model="item.quantity" @change="updateCart" />
           </td>
-          <td>{{ item.price * item.count }}円</td>
-          <!--<td>
-            <button @click="removeFromCart(id)">削除</button>
-          </td>-->
+          <td>{{ item.price * item.quantity }}</td>
+          <td>
+            <button @click="removeItem(index)">Remove</button>
+          </td>
         </tr>
       </tbody>
-      <tfoot>
-        <tr>
-          <th colspan="3">合計</th>
-          <th>{{ totalAmount }}円</th>
-        </tr>
-      </tfoot>
     </table>
+    <div v-else id="cartnone">
+      <h2>Your cart is empty</h2>
+      {{ storeShoppingCart.get().items }}
+    </div>
   </div>
 </template>
-
-<script>
-import { ref, computed, watch } from "vue";
-import { useStore } from '@nanostores/vue';
-import { $cartDataAtom } from "../script/store";
-const $cartItems = useStore($cartDataAtom);
-export default {
-  props: ['cartData'],
-  setup(props) {
-    const cartData = ref(props.cartData || $cartItems);
-    const totalAmount = computed(() => {
-      return Object.values(cartData.value).reduce(
-        (total, item) => total + item.price * item.count,
-        0
-      );
-    });
-
-    watch(() => $cartItems, (newVal) => {
-      cartData.value = newVal;
-    });
-    return {
-      cartData,
-      totalAmount,
-      updateCart,
-      removeFromCart,
-      clearCart,
-    };
-  },
-};
-</script>
 
 <style scoped>
 #Cart {
@@ -74,7 +48,7 @@ export default {
   margin: 40px;
 }
 table {
-  color:black;
+  color: black;
   width: 60vw;
   background-color: aliceblue;
   border-collapse: collapse;

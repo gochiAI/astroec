@@ -11,5 +11,9 @@ export default defineConfig({
   integrations: [vue(), tailwind(), metaTags(), pageInsight(), icon()],
   site: 'https://gochiA.github.io/',
   outDir: "./docs",
-  base: '/astroec'
+  base: '/astroec',
+  trailingSlash: 'ignore',
+  redirects: {
+    '/view': '../',
+  },
 });

@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { fItemD,InCart } from "../../script/store";
+import { product_items, storeShoppingCart } from "../../script/store";
 export async function getStaticPaths() {
   return [
     { params: { id: "1044" } },
@@ -10,26 +10,27 @@ export async function getStaticPaths() {
 }
 
 const { id } = Astro.params;
+const viewItem = product_items.get()[id];
+const cart = storeShoppingCart.get();
 import { Icon } from "astro-icon/components";
 ---
 
-<Layout title={fItemD(id).name}>
+<Layout title={viewItem.name}>
   <main>
     <div id="item_detail">
-      <img src=`../../core_sys/item/${id}.png` alt="" />
+      <img src=`../../astroec/core_sys/item/${id}.png` alt="" />
       <div id="item_desc">
-        <div class="item-title">{fItemD(id).name}</div>
+        <div class="item-title">{viewItem.name}</div>
         <div class="item-price-wrap">
           <p class="item-price">
             <span class="item_prace_text">販売価格：</span>￥<span
-              data-id="makeshop-item-price:1">{fItemD(id).price}</span
+              data-id="makeshop-item-price:1">{viewItem.price}</span
             ><span class="item-tax"> ( 税込 )</span>
           </p>
         </div>
         <div id="cart_area">
-          <button onclick=`${InCart(id)}` id="IncartB">カートに入れる</button>
-          <button id="fav_button"><Icon name="mdi:favorite" /></button
-          >
+          <button id="IncartB">カートに入れる</button>
+          <button id="fav_button"><Icon name="mdi:favorite" /></button>
         </div>
       </div>
     </div>
@@ -60,24 +61,28 @@ import { Icon } from "astro-icon/components";
     display: flex;
     padding-top: 10px;
   }
-  #Incart{display: flex;
+  #Incart {
+    display: flex;
     align-items: center;
     background-color: #548278;
     border-radius: 5px;
     font-weight: bold;
-    padding: 10px;}
+    padding: 10px;
+  }
   #fav_button {
     font-size: 24px;
     font-weight: 900;
     margin-left: 5px;
     color: #ff7683;
   }
-  #IncartB{display: flex;
+  #IncartB {
+    display: flex;
     align-items: center;
     background-color: #548278;
     border-radius: 5px;
     font-weight: bold;
-    padding: 10px;}
+    padding: 10px;
+  }
   #IncartB:hover {
     background-color: #3e5f4d;
   }
@@ -85,3 +90,15 @@ import { Icon } from "astro-icon/components";
     background-color: green;
   }
 </style>
+<script>
+  import { product_items,addCart,storeShoppingCart } from "../../script/store";
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log(storeShoppingCart.get().items);
+    const id = window.location.pathname.split("/").pop()?.split("_").pop();
+    const viewItem = product_items.get()[id];
+    document.getElementById("IncartB").addEventListener("click", () => {
+      addCart(viewItem.name, viewItem.price, 1, id);
+      alert(`${viewItem.name}をカートに追加しました`);
+    });
+  });
+</script>
