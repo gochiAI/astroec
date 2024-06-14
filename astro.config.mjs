@@ -9,11 +9,8 @@ import icon from "astro-icon";
 // https://astro.build/config
 export default defineConfig({
   integrations: [vue(), tailwind(), metaTags(), pageInsight(), icon()],
-  site: 'https://gochiA.github.io/',
+  site: 'https://gochiai.github.io/',
   outDir: "./docs",
   base: '/astroec',
   trailingSlash: 'ignore',
-  redirects: {
-    '/view': '../',
-  },
 });
