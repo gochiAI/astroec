@@ -28,6 +28,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    env:
+     VERSION: "8.8.0"
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
